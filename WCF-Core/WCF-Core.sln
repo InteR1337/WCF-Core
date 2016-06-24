@@ -11,6 +11,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.Contracts", "GeoLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.Services", "GeoLib.Services\GeoLib.Services.csproj", "{EAA13FB9-BF30-4BFB-9439-0CD17381A3F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.Tests", "GeoLib.Tests\GeoLib.Tests.csproj", "{AB104591-D32E-4471-B470-E01840112512}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosting", "Hosting", "{8AFE1AE8-32C1-45CE-ADAA-73577FEA3977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.ConsoleHost", "GeoLib.ConsoleHost\GeoLib.ConsoleHost.csproj", "{56E0F5EF-EB90-4853-AD1C-C2A834FFEDEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.WebHosting", "GeoLib.WebHosting\GeoLib.WebHosting.csproj", "{D1254636-B808-4323-9D97-05BFAACB533A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.Proxies", "GeoLib.Proxies\GeoLib.Proxies.csproj", "{26DB0E7F-1809-499F-B521-477ABB5B459E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.Client", "GeoLib.Client\GeoLib.Client.csproj", "{A0ACBC4D-FDF9-4CAD-A876-DF72767299CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib.WindowsHost", "GeoLib.WindowsHost\GeoLib.WindowsHost.csproj", "{AE766918-D4EA-426F-9E8E-F869D6327D16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +47,37 @@ Global
 		{EAA13FB9-BF30-4BFB-9439-0CD17381A3F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAA13FB9-BF30-4BFB-9439-0CD17381A3F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAA13FB9-BF30-4BFB-9439-0CD17381A3F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB104591-D32E-4471-B470-E01840112512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB104591-D32E-4471-B470-E01840112512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB104591-D32E-4471-B470-E01840112512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB104591-D32E-4471-B470-E01840112512}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E0F5EF-EB90-4853-AD1C-C2A834FFEDEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E0F5EF-EB90-4853-AD1C-C2A834FFEDEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E0F5EF-EB90-4853-AD1C-C2A834FFEDEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E0F5EF-EB90-4853-AD1C-C2A834FFEDEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1254636-B808-4323-9D97-05BFAACB533A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1254636-B808-4323-9D97-05BFAACB533A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1254636-B808-4323-9D97-05BFAACB533A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1254636-B808-4323-9D97-05BFAACB533A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26DB0E7F-1809-499F-B521-477ABB5B459E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26DB0E7F-1809-499F-B521-477ABB5B459E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26DB0E7F-1809-499F-B521-477ABB5B459E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26DB0E7F-1809-499F-B521-477ABB5B459E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0ACBC4D-FDF9-4CAD-A876-DF72767299CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0ACBC4D-FDF9-4CAD-A876-DF72767299CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0ACBC4D-FDF9-4CAD-A876-DF72767299CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0ACBC4D-FDF9-4CAD-A876-DF72767299CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE766918-D4EA-426F-9E8E-F869D6327D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE766918-D4EA-426F-9E8E-F869D6327D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE766918-D4EA-426F-9E8E-F869D6327D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE766918-D4EA-426F-9E8E-F869D6327D16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56E0F5EF-EB90-4853-AD1C-C2A834FFEDEE} = {8AFE1AE8-32C1-45CE-ADAA-73577FEA3977}
+		{D1254636-B808-4323-9D97-05BFAACB533A} = {8AFE1AE8-32C1-45CE-ADAA-73577FEA3977}
+		{AE766918-D4EA-426F-9E8E-F869D6327D16} = {8AFE1AE8-32C1-45CE-ADAA-73577FEA3977}
 	EndGlobalSection
 EndGlobal

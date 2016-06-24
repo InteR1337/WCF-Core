@@ -1,0 +1,10 @@
+﻿<Window x:Class="GeoLib.WindowsHost.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="192" Width="276">
+    <Grid>
+        <Button Name="btnStartServices" Content="Start Services" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="248" Click="BtnStartServices_Click"/>
+        <Button Name="btnStopServices" Content="Stop Services" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="248" Click="BtnStopServices_Click" />
+        <Label Name="lblMessage"  Content="" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="48" Width="248"/>
+    </Grid>
+</Window>
