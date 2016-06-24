@@ -51,7 +51,7 @@ namespace GeoLib.Core
         {
             using (U entityContext = new U())
             {
-                entityContext.Entry<T>(entity).State = System.Data.EntityState.Deleted;
+                entityContext.Entry<T>(entity).State = EntityState.Deleted;
                 entityContext.SaveChanges();
             }
         }

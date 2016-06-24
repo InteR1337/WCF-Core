@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GeoLib.Services</RootNamespace>
     <AssemblyName>GeoLib.Services</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -47,6 +53,10 @@
     <ProjectReference Include="..\GeoLib.Contracts\GeoLib.Contracts.csproj">
       <Project>{79fd118f-fcc7-47fd-b311-f1ca49d095e6}</Project>
       <Name>GeoLib.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeoLib.Core\GeoLib.Core.csproj">
+      <Project>{461922d9-747f-4bb0-ac2e-4737139eedb6}</Project>
+      <Name>GeoLib.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\GeoLib.Data\GeoLib.Data.csproj">
       <Project>{db2ca02f-5d34-4734-8a44-634bfd381244}</Project>
