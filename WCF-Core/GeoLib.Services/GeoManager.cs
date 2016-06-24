@@ -6,9 +6,11 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using GeoLib.Data;
+using System.ServiceModel;
 
 namespace GeoLib.Services
 {
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class GeoManager : IGeoService
     {
         private IZipCodeRepository _ZipCodeRepository;

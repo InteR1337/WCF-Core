@@ -5,6 +5,8 @@
     <Grid>
         <Button Name="btnStartServices" Content="Start Services" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="248" Click="BtnStartServices_Click"/>
         <Button Name="btnStopServices" Content="Stop Services" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="248" Click="BtnStopServices_Click" />
-        <Label Name="lblMessage"  Content="" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="48" Width="248"/>
+        <Label Name="lblMessage"  Content="" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="32" Width="248"/>
+        <Button Name="btnInProc" Click="btnInProc_Click" Content="In-Proc Service" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Name="lblMessage2" Content="" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="248"/>
     </Grid>
 </Window>

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GeoLib.Services;
+using GeoLib.WindowsHost.Contracts;
 
 namespace GeoLib.WindowsHost
 {
@@ -28,6 +29,8 @@ namespace GeoLib.WindowsHost
         private ServiceHost _HostGeoManager { get; set; }
         private ServiceHost _HostMessageManager { get; set; }
 
+        private SynchronizationContext _SyncContext;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +39,7 @@ namespace GeoLib.WindowsHost
             btnStopServices.IsEnabled = false;
 
             MainUI = this;
+            _SyncContext = SynchronizationContext.Current;
 
             this.Title = string.Format("UI Running on Thread {0} | Process {1}", Thread.CurrentThread.ManagedThreadId, Process.GetCurrentProcess().Id);
         }
@@ -64,7 +68,24 @@ namespace GeoLib.WindowsHost
         public void ShowMessage(string message)
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
-            lblMessage.Content = string.Format("{0}{1} Thread Id: {2} Process Id: {3}", message, Environment.NewLine, threadId, Process.GetCurrentProcess().Id);
+
+            lblMessage2.Content = string.Format("{0}{1} Thread Id: {2} Process Id: {3}", message, Environment.NewLine, threadId, Process.GetCurrentProcess().Id);
+        }
+
+        private void btnInProc_Click(object sender, RoutedEventArgs e)
+        {
+            Thread thread = new Thread(x =>
+            {
+                ChannelFactory<IMessageService> channelFactory = new ChannelFactory<IMessageService>("");
+                IMessageService proxy = channelFactory.CreateChannel();
+
+                proxy.ShowMessage(DateTime.Now.ToLongTimeString() + " from in-process call.");
+
+                channelFactory.Close();
+            });
+
+            thread.IsBackground = true;
+            thread.Start();
         }
     }
 }
