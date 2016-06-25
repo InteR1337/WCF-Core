@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GeoLib.Contracts;
 using GeoLib.Services;
+using System.ServiceModel.Description;
 
 namespace GeoLib.ConsoleHost
 {

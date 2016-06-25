@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using GeoLib.Data;
 using System.ServiceModel;
+using System.Threading;
 
 namespace GeoLib.Services
 {
-    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
+    //[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class GeoManager : IGeoService
     {
         private IZipCodeRepository _ZipCodeRepository;
@@ -39,6 +40,8 @@ namespace GeoLib.Services
 
         public ZipCodeData GetZipInfo(string zip)
         {
+            //Thread.Sleep(10000);
+
             ZipCodeData zipCodeData = null;
 
             IZipCodeRepository zipCodeRepository = _ZipCodeRepository ?? new ZipCodeRepository();

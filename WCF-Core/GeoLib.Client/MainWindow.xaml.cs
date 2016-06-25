@@ -29,22 +29,25 @@ namespace GeoLib.Client
         public MainWindow()
         {
             InitializeComponent();
+            _Proxy = new GeoClient("tcpEP");
         }
+
+        GeoClient _Proxy = null;
 
         private void btnGetInfo_Click(object sender, RoutedEventArgs e)
         {
             if (txtZipCode.Text != string.Empty)
             {
-                GeoClient proxy = new GeoClient("webEP");
+                //GeoClient proxy = new GeoClient("tcpEP");
 
-                ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
+                ZipCodeData data = _Proxy.GetZipInfo(txtZipCode.Text);
                 if (data != null)
                 {
                     lblCity.Content = data.City;
                     lblState.Content = data.State;
                 }
 
-                proxy.Close();
+                //proxy.Close();
             }
         }
 
@@ -52,10 +55,7 @@ namespace GeoLib.Client
         {
             if (txtState.Text != string.Empty)
             {
-                EndpointAddress address = new EndpointAddress("net.tcp://localhost:8009/GeoService");
-                System.ServiceModel.Channels.Binding binding = new NetTcpBinding();
-
-                GeoClient proxy = new GeoClient(binding, address);
+                GeoClient proxy = new GeoClient("tcpEP");
 
                 IEnumerable<ZipCodeData> data = proxy.GetZips(txtState.Text);
                 if (data != null)
