@@ -10,7 +10,7 @@
         <Label Name="lblState" HorizontalAlignment="Left" Margin="124,121,0,0" VerticalAlignment="Top" Width="84"/>
         <Label Content="State:" HorizontalAlignment="Left" Margin="288,26,0,0" VerticalAlignment="Top"/>
         <TextBox Name="txtState" HorizontalAlignment="Left" Height="23" Margin="332,28,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="82"/>
-        <Button Name="btnGetZipCodes" Content="Get Zip Codes" HorizontalAlignment="Left" Margin="332,59,0,0" VerticalAlignment="Top" Width="82" Click="BtnGetZipCodes_Click"/>
+        <Button Name="btnGetInRange" Content="Get In Range" HorizontalAlignment="Left" Margin="332,59,0,0" VerticalAlignment="Top" Width="82" Click="btnGetInRange_Click"/>
         <ListBox Name="lstZips" HorizontalAlignment="Left" Height="185" Margin="332,94,0,0" VerticalAlignment="Top" Width="142">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -25,6 +25,7 @@
         <Button Name="btnMakeCall" Content="Make Call" HorizontalAlignment="Left" Margin="67,259,0,0" VerticalAlignment="Top" Width="75" Click="BtnMakeCall_Click" />
         <TextBox Name="txtMessage" HorizontalAlignment="Left" Height="24" Margin="67,230,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="201"/>
         <Label Content="Text to show:" HorizontalAlignment="Left" Margin="67,199,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnPush" Content="Push" HorizontalAlignment="Left" Margin="205,29,0,0" VerticalAlignment="Top" Width="63" Click="btnPush_Click" />
 
     </Grid>
 </Window>

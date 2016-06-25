@@ -29,41 +29,39 @@ namespace GeoLib.Client
         public MainWindow()
         {
             InitializeComponent();
-            _Proxy = new GeoClient("tcpEP");
+            //_Proxy = new GeoClient("tcpEP");
+            _Proxy = new StatefulGeoClient();
         }
 
-        GeoClient _Proxy = null;
+        StatefulGeoClient _Proxy = null;
 
         private void btnGetInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (txtZipCode.Text != string.Empty)
+            //GeoClient proxy = new GeoClient("tcpEP");
+
+            ZipCodeData data = _Proxy.GetZipInfo();
+            if (data != null)
             {
-                //GeoClient proxy = new GeoClient("tcpEP");
-
-                ZipCodeData data = _Proxy.GetZipInfo(txtZipCode.Text);
-                if (data != null)
-                {
-                    lblCity.Content = data.City;
-                    lblState.Content = data.State;
-                }
-
-                //proxy.Close();
+                lblCity.Content = data.City;
+                lblState.Content = data.State;
             }
+
+            //proxy.Close();
         }
 
-        private void BtnGetZipCodes_Click(object sender, RoutedEventArgs e)
+        private void btnGetInRange_Click(object sender, RoutedEventArgs e)
         {
             if (txtState.Text != string.Empty)
             {
-                GeoClient proxy = new GeoClient("tcpEP");
+                //GeoClient proxy = new GeoClient("tcpEP");
 
-                IEnumerable<ZipCodeData> data = proxy.GetZips(txtState.Text);
+                IEnumerable<ZipCodeData> data = _Proxy.GetZips(int.Parse(txtState.Text));
                 if (data != null)
                 {
                     lstZips.ItemsSource = data;
                 }
 
-                proxy.Close();
+                //_Proxy.Close();
             }
         }
 
@@ -78,6 +76,14 @@ namespace GeoLib.Client
             proxy.ShowMsg(txtMessage.Text);
 
             factory.Close();
+        }
+
+        private void btnPush_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtZipCode.Text != null)
+            {
+                _Proxy.PushZip(txtZipCode.Text);
+            }
         }
     }
 }

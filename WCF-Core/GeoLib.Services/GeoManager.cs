@@ -11,11 +11,12 @@ using System.Threading;
 
 namespace GeoLib.Services
 {
-    //[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class GeoManager : IGeoService
     {
         private IZipCodeRepository _ZipCodeRepository;
         private IStateRepository _StateRepository;
+        private int _Counter = 0;
 
         public GeoManager()
         {
@@ -41,6 +42,7 @@ namespace GeoLib.Services
         public ZipCodeData GetZipInfo(string zip)
         {
             //Thread.Sleep(10000);
+            _Counter++;
 
             ZipCodeData zipCodeData = null;
 
@@ -51,6 +53,8 @@ namespace GeoLib.Services
             {
                 zipCodeData = LocalConfiguration.Mapper.Map<ZipCodeData>(zipCodeEntity);
             }
+
+            Console.WriteLine("Counter = {0}", _Counter);
 
             return zipCodeData;
         }

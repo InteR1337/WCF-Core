@@ -15,34 +15,17 @@ namespace GeoLib.ConsoleHost
     {
         static void Main(string[] args)
         {
-            ServiceHost hostGeoManager = new ServiceHost(typeof(GeoManager), 
-                new Uri("http://localhost:8080"), 
-                new Uri("net.tcp://localhost:8009"));
-
-            ServiceMetadataBehavior metadataBehavior = hostGeoManager.Description.Behaviors.Find<ServiceMetadataBehavior>();
-            if (metadataBehavior == null)
-            {
-                metadataBehavior = new ServiceMetadataBehavior();
-                metadataBehavior.HttpGetEnabled = true;
-                hostGeoManager.Description.Behaviors.Add(metadataBehavior);
-            }
-            else
-            {
-                metadataBehavior.HttpGetEnabled = true;
-            }
-
-            hostGeoManager.AddServiceEndpoint(typeof(IMetadataExchange), 
-                MetadataExchangeBindings.CreateMexHttpBinding(), "MEX");
+            ServiceHost hostGeoManager = new ServiceHost(typeof(GeoManager));
+            ServiceHost statefulHostGeoManager = new ServiceHost(typeof(StatefulGeoManager));
 
             hostGeoManager.Open();
-
-
-
+            statefulHostGeoManager.Open();
 
             Console.WriteLine("Services started. Press [Enter] to exit.");
             Console.ReadLine();
 
             hostGeoManager.Close();
+            statefulHostGeoManager.Close();
         }
     }
 }
