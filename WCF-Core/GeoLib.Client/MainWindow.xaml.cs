@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.ServiceModel;
-using System.Text;
+using System.ServiceModel.Channels;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using GeoLib.Client.Contracts;
 using GeoLib.Contracts;
 using GeoLib.Proxies;
@@ -22,24 +12,36 @@ using GeoLib.Proxies;
 namespace GeoLib.Client
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    [CallbackBehavior(UseSynchronizationContext = false)]
+    public partial class MainWindow : Window, IUpdateZipCallback
     {
+        private readonly StatefulGeoClient _Proxy;
+        private readonly SynchronizationContext _SyncContext;
+
         public MainWindow()
         {
             InitializeComponent();
             //_Proxy = new GeoClient("tcpEP");
             _Proxy = new StatefulGeoClient();
+            _SyncContext = SynchronizationContext.Current;
         }
 
-        StatefulGeoClient _Proxy = null;
+        public void ZipUpdated(ZipCityData zipCityData)
+        {
+            //MessageBox.Show(string.Format("Updated zipcode {0} with city {1}.", zipCityData.ZipCode, zipCityData.City));
+
+            SendOrPostCallback callback = arg => { lstUpdates.Items.Add(zipCityData); };
+
+            _SyncContext.Send(callback, null);
+        }
 
         private void btnGetInfo_Click(object sender, RoutedEventArgs e)
         {
             //GeoClient proxy = new GeoClient("tcpEP");
 
-            ZipCodeData data = _Proxy.GetZipInfo();
+            var data = _Proxy.GetZipInfo();
             if (data != null)
             {
                 lblCity.Content = data.City;
@@ -55,7 +57,7 @@ namespace GeoLib.Client
             {
                 //GeoClient proxy = new GeoClient("tcpEP");
 
-                IEnumerable<ZipCodeData> data = _Proxy.GetZips(int.Parse(txtState.Text));
+                var data = _Proxy.GetZips(int.Parse(txtState.Text));
                 if (data != null)
                 {
                     lstZips.ItemsSource = data;
@@ -67,11 +69,11 @@ namespace GeoLib.Client
 
         private void BtnMakeCall_Click(object sender, RoutedEventArgs e)
         {
-            EndpointAddress address = new EndpointAddress("net.tcp://localhost:8010/MessageService");
-            System.ServiceModel.Channels.Binding binding = new NetTcpBinding();
+            var address = new EndpointAddress("net.tcp://localhost:8010/MessageService");
+            Binding binding = new NetTcpBinding();
 
-            ChannelFactory<IMessageService> factory = new ChannelFactory<IMessageService>(binding, address);
-            IMessageService proxy = factory.CreateChannel();
+            var factory = new ChannelFactory<IMessageService>(binding, address);
+            var proxy = factory.CreateChannel();
 
             proxy.ShowMsg(txtMessage.Text);
 
@@ -84,6 +86,91 @@ namespace GeoLib.Client
             {
                 _Proxy.PushZip(txtZipCode.Text);
             }
+        }
+
+        private void btnOneWay_Click(object sender, RoutedEventArgs e)
+        {
+            var proxy = new GeoClient("httpEP");
+
+            proxy.OneWayExample();
+
+            MessageBox.Show("Oneway Example called. Back at client.");
+
+            proxy.Close();
+
+            MessageBox.Show("Proxy now closed.");
+        }
+
+        private async void btnUpdateBatch_Click(object sender, RoutedEventArgs e)
+        {
+            var cityZipList = new List<ZipCityData>
+            {
+                new ZipCityData {ZipCode = "07035", City = "Bedrock"},
+                new ZipCityData {ZipCode = "33033", City = "End of the World"},
+                new ZipCityData {ZipCode = "90210", City = "Alderan"},
+                new ZipCityData {ZipCode = "07094", City = "Storybrooke"}
+            };
+
+            lstUpdates.Items.Clear();
+
+            //await Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        var proxy = new GeoClient(new InstanceContext(this), "tcpEP");
+
+            //        proxy.UpdateZipCity(cityZipList);
+
+            //        proxy.Close();
+
+            //        MessageBox.Show("Updated.");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Error: " + ex.Message);
+            //    }
+            //});
+
+            GeoClient proxy = new GeoClient(new InstanceContext(this), "tcpEP");
+            Task<int> task = proxy.UpdateZipCityAsync(cityZipList);
+
+            task.ContinueWith(x =>
+            {
+                MessageBox.Show(string.Format("Service returned {0} items.", x.Result));
+            });
+
+            MessageBox.Show("Call made.");
+        }
+
+        private async void btnPutBack_Click(object sender, RoutedEventArgs e)
+        {
+            var cityZipList = new List<ZipCityData>
+            {
+                new ZipCityData {ZipCode = "07035", City = "Lincoln Park"},
+                new ZipCityData {ZipCode = "33033", City = "Homestead"},
+                new ZipCityData {ZipCode = "90210", City = "Beverly Hills"},
+                new ZipCityData {ZipCode = "07094", City = "Secaucus"}
+            };
+
+            lstUpdates.Items.Clear();
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    var proxy = new GeoClient(new InstanceContext(this), "tcpEP");
+
+                    proxy.UpdateZipCity(cityZipList);
+
+                    proxy.Close();
+
+                    MessageBox.Show("Updated.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            });
         }
     }
 }

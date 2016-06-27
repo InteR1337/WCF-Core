@@ -2,16 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using GeoLib.Data;
-using System.ServiceModel;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace GeoLib.Services
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class GeoManager : IGeoService
     {
         private IZipCodeRepository _ZipCodeRepository;
@@ -112,6 +112,36 @@ namespace GeoLib.Services
             }
 
             return zipCodeData;
+        }
+
+        [OperationBehavior(TransactionScopeRequired = true)]
+        public int UpdateZipCity(IEnumerable<ZipCityData> zipCityData)
+        {
+            IZipCodeRepository zipCodeRepository = _ZipCodeRepository ?? new ZipCodeRepository();
+
+            int counter = 0;
+            foreach (ZipCityData zipCityItem in zipCityData)
+            {
+                ZipCode zipCodeEntity = zipCodeRepository.GetByZip(zipCityItem.ZipCode);
+                zipCodeEntity.City = zipCityItem.City;
+                ZipCode updatedItem = zipCodeRepository.Update(zipCodeEntity);
+
+                IUpdateZipCallback callback = OperationContext.Current.GetCallbackChannel<IUpdateZipCallback>();
+
+                if (callback != null)
+                {
+                    callback.ZipUpdated(zipCityItem);
+                    Thread.Sleep(500);
+                }
+                counter++;
+            }
+
+            return counter;
+        }
+
+        public void OneWayExample()
+        {
+            MessageBox.Show("Made it to the service.");
         }
     }
 }
